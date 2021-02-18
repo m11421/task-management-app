@@ -1,0 +1,5 @@
+{"_id":"id1","name":"Play Station 4","developer":{"name":"Sony","country":"JP"},"releaseDate":{"$$date":1395414000000},"price":39980,"media":"Blu-ray","portable":false,"connectivity":["HDMI","USB","Ethernet","Wi-Fi","Bluetooth"],"peripheral":["Play Station VR"]}
+{"_id":"id2","name":"Play Station Vita","developer":{"name":"Sony","country":"JP"},"releaseDate":{"$$date":1326726000000},"price":24980,"media":"Card","portable":true,"connectivity":["Wi-Fi","Bluetooth","3G"]}
+{"_id":"id3","name":"Nintendo 3DS","developer":{"name":"Nintendo","country":"JP"},"releaseDate":{"$$date":1301065200000},"price":25000,"media":"Card","portable":true,"connectivity":["Wi-Fi"]}
+{"_id":"id4","name":"Nintendo Switch","developer":{"name":"Nintendo","country":"JP"},"releaseDate":{"$$date":1491145200000},"price":29980,"media":"Card","portable":true,"connectivity":["HDMI","USB","Wi-Fi","Bluetooth"]}
+{"_id":"id5","name":"Xbox One","developer":{"name":"Microsoft","country":"US"},"releaseDate":{"$$date":1387638000000},"price":39980,"media":"Blu-ray","portable":false,"connectivity":["HDMI","USB","Ethernet","Wi-Fi"],"peripheral":["Kinect"]}
