@@ -2,19 +2,33 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>mmmaker v0.1.0</title>
+    <title>electron-nedb_crud</title>
     <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
     <link href="assets/css/main.css" rel="stylesheet" />
     <script src="datastore.js"></script>
 </head>
 <body>
-    <h1>Hello World!</h1>
-    <p>
-        We are using node <script>document.write(process.versions.node)</script>,
-        Chrome <script>document.write(process.versions.chrome)</script>,
-        and Electron <script>document.write(process.versions.electron)</script>.
-    </p>
-    <button onclick="Insert(doc)">initial insert</button>
-    <button onclick="GetDatas()">get</button>
+    <h1>CRUD test</h1>
+    <section>
+        <h2>Add tasks</h2>
+        <form id="add-form" action="#">
+            <label for="add-form_title">title</label>
+            <input type="text" id="add-form_title"><br>
+            <label for="add-form_deadline">deadline</label>
+            <input type="datetime-local" id="add-form_deadline"><br>
+            <label for="add-form_priority">priority</label>
+            <input type="range" id="add-form_priority" max="3" min="1"><br>
+            <label for="add-form_timescale">timescale</label>
+            <input type="number" id="add-form_timescale" step="15"> min.
+        </form>
+        <button onclick="createData()">Add task to list!</button>
+    </section>
+    <section>
+        <h2>List of tasks</h2>
+        <button onclick="reloadList()">Reload</button>
+        <ul id="tasklist">
+        </ul>
+    </section>
+
 </body>
 </html>

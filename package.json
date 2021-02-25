@@ -1,8 +1,8 @@
 {
-  "name": "my-electron-app",
+  "name": "electron-nedb_crud",
   "version": "0.1.0",
   "author": "m11421",
-  "description": "My Electron app",
+  "description": "App for practice of nedb and electron.",
   "main": "main.js",
   "scripts": {
     "start": "electron-forge start",
@@ -32,7 +32,7 @@
         {
           "name": "@electron-forge/maker-squirrel",
           "config": {
-            "name": "my_electron_app"
+            "name": "electron-nedb_crud"
           }
         },
         {
