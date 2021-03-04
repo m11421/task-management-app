@@ -1,3 +1,4 @@
+var SortableTable = require('@riversun/sortable-table');
 var Datastore = require('nedb');
 let db = new Datastore({ filename: 'data.db' });
 
@@ -63,12 +64,71 @@ function deleteData(id) {
 
 function reloadList() {
   db.find({}, (error, docs) => {
-    for (const task of docs) {
-      console.log(task);
-      console.log('title: ' + task.title);
-      console.log('deadline: ' + task.deadline);
-      
+    const tasks = [];
+    const parent_div = document.querySelector('.sortable-table');
+    if (!(parent_div.hasChildNodes())) {
+      const tasklist_table = document.createElement('table');
+      const tasklist_header = document.createElement('thead');
+      const tasklist_header_tr = document.createElement('tr');
+
+      // const tasklist_header_id = document.createElement('th');
+      // const id_content_div = document.createElement('div');
+      // id_content_div.append('#');
+      // tasklist_header_id.appendChild(id_content_div);
+      // tasklist_header_id.setAttribute('data-id', 'id');
+      // tasklist_header_id.setAttribute('data-header', '');
+
+      const tasklist_header_title = document.createElement('th');
+      const title_content = document.createTextNode('タイトル');
+      tasklist_header_title.appendChild(title_content);
+      tasklist_header_title.setAttribute('data-id', 'title');
+
+      const tasklist_header_deadline = document.createElement('th');
+      const deadline_content = document.createTextNode('期限');
+      tasklist_header_deadline.appendChild(deadline_content);
+      tasklist_header_deadline.setAttribute('data-id', 'deadline');
+      tasklist_header_deadline.setAttribute('sortable', '');
+
+      const tasklist_header_priority = document.createElement('th');
+      const priority_content = document.createTextNode('優先度');
+      tasklist_header_priority.appendChild(priority_content);
+      tasklist_header_priority.setAttribute('data-id', 'priority');
+      tasklist_header_priority.setAttribute('sortable', '');
+
+      const tasklist_header_timescale = document.createElement('th');
+      const timescale_content = document.createTextNode('所要時間');
+      tasklist_header_timescale.appendChild(timescale_content);
+      tasklist_header_timescale.setAttribute('data-id', 'timescale');
+      tasklist_header_timescale.setAttribute('sortable', '');
+
+      tasklist_header_tr.append(
+        // tasklist_header_id,
+        tasklist_header_title, tasklist_header_deadline,
+        tasklist_header_priority, tasklist_header_timescale
+      );
+      tasklist_header.appendChild(tasklist_header_tr);
+
+      tasklist_table.appendChild(tasklist_header);
+      tasklist_table.setAttribute('id', 'tasklist');
+      parent_div.appendChild(tasklist_table);
     }
+    var id = 0;
+    for (const task of docs) {
+      task.id = id;
+      tasks.push(task);
+      id = id + 1;
+    }
+
+    const sortableTable = new SortableTable();
+    sortableTable.setTable(document.querySelector('#tasklist'));
+    sortableTable.setData(tasks);
+    sortableTable.events()
+      .on('sort', (event) => {
+        console.log(`[SortableTable#onSort]
+      event.colId=${event.colId}
+      event.sortDir=${event.sortDir}
+      event.data=\n${JSON.stringify(event.data)}`);
+      });
   });
 }
 
