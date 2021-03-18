@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8">
     <title>electron-nedb_crud</title>
@@ -7,27 +8,26 @@
     <link href="assets/css/main.css" rel="stylesheet" />
     <script src="datastore.js"></script>
 </head>
+
 <body>
     <h1>CRUD test</h1>
     <section>
-        <h2>Add tasks</h2>
+        <h2>Add new task</h2>
         <form id="add-form" action="#">
-            <label for="add-form_title">title</label>
-            <input type="text" id="add-form_title"><br>
-            <label for="add-form_deadline">deadline</label>
-            <input type="datetime-local" id="add-form_deadline"><br>
-            <label for="add-form_priority">priority</label>
-            <input type="range" id="add-form_priority" max="3" min="1"><br>
-            <label for="add-form_timescale">timescale</label>
-            <input type="number" id="add-form_timescale" step="15"> min.
+            <input type="text" id="add-form_title" placeholder="title of task">
+            <input type="datetime-local" id="add-form_deadline">
+            <img src="assets/img/icon/priority.svg">
+            <input type="range" id="add-form_priority" max="3" min="1">
+            <img src="assets/img/icon/timescale.svg">
+            <input type="number" id="add-form_timescale" step="15" placeholder="timescale"> <span>min.</span>
         </form>
-        <button onclick="createData()">Add task to list!</button>
+        <button class="button" onclick="createData()">Add task to list!</button>
     </section>
     <section>
-        <h2>List of tasks</h2>
-        <button onclick="reloadList()">Reload</button>
+        <h2>List of tasks<button onclick="reloadList()"></button></h2>
         <div class="sortable-table"></div>
     </section>
 
 </body>
+
 </html>

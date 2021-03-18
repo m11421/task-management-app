@@ -1,10 +1,174 @@
+$text-color: #011627;
+$bg-color: #fdfffc;
+$main-color: #0081af;
+$main-light-color: #00abe7;
+$sub-color: #827081;
+// https://coolors.co/011627-fdfffc-827081-0081af-00abe7
+
 :root {
-    font-family: sans-serif;
-    font-size: 14px;
+  --gap: 1rem;
+}
+
+:focus {
+  outline: none;
+}
+
+* {
+  font-family: "Segoe UI", "Arial", "Yu Gothic", "Meiryo", "Helvetica Neue",
+    "Helvetica", "Hiragino Sans", "Hiragino Kaku Gothic ProN", sans-serif;
+  font-size: 14px;
+  line-height: 1;
+  margin: 0;
+  color: $text-color;
+}
+
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
 }
 
 body {
-    background-color: #fff;
-    color: #ccc;
-    display: grid;
+  background-color: rgba($sub-color, 0.1);
+  display: grid;
+  margin: var(--gap);
+  column-gap: var(--gap);
+  grid-template-columns: 30% 1fr;
+}
+
+h1 {
+  grid-column: 1 / -1;
+  margin-bottom: 0.8rem;
+  font-size: 2rem;
+  color: $main-color;
+}
+
+h2 {
+  position: relative;
+  color: $main-light-color;
+  font-size: 1.5rem;
+  margin-bottom: 0.5em;
+
+  button {
+    position: absolute;
+    background-image: url(../../assets/img/icon/reload.svg);
+    width: 18px;
+    height: 18px;
+    object-fit: cover;
+    vertical-align: bottom;
+    right: 0;
+  }
+}
+
+@keyframes rotate360 {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360);
+  }
+}
+
+section {
+  padding: 1rem;
+  background-color: $bg-color;
+  border-radius: 0.5rem;
+  filter: drop-shadow(0px 3px 4px rgba($text-color, 0.2));
+}
+
+.button {
+  padding: 0.5rem 1rem;
+  background-color: $main-light-color;
+  color: $bg-color;
+  border-bottom: 3px solid $main-color;
+  border-radius: 0.5rem;
+}
+
+.button:active {
+  border-bottom: none;
+  border-top: 3px solid $main-light-color;
+  background-color: $main-color;
+}
+
+#add-form {
+  margin: 1rem 0;
+  display: grid;
+  grid-template-rows: repeat(4, max-content);
+  grid-template-columns: 18px calc(100% - 53px) 2rem;
+  row-gap: 1rem;
+  column-gap: 0.3rem;
+  align-items: center;
+
+  img {
+    grid-column: 1;
+  }
+
+  input {
+    box-sizing: border-box;
+    border: none;
+    border-radius: 1.3rem;
+    padding: 0.3rem 1rem;
+    filter: drop-shadow(0 0 4px rgba($sub-color, 0.2));
+    transition: 0.3s;
+
+    &:focus {
+      filter: drop-shadow(0 0 4px rgba($sub-color, 0.4));
+    }
+
+    &#add-form_title,
+    &#add-form_deadline {
+      grid-column: 1 / -1;
+    }
+
+    &#add-form_priority {
+      padding: 0;
+      grid-column: 2 / -1;
+    }
+
+    &#add-form_timescale {
+      grid-column: 2;
+    }
+  }
+}
+
+#tasklist {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.sortable-table {
+  td {
+    padding: 0.3rem 0;
+  }
+  tr:nth-child(2n) {
+    background-color: rgba($sub-color, 0.1);
+  }
+  thead {
+    background-color: $main-light-color;
+    th {
+      padding: 0.5rem 0;
+      color: $bg-color;
+
+      &.sortable {
+        &[data-id="deadline"] {
+          width: 23%;
+        }
+
+        &[data-id="priority"],
+        &[data-id="timescale"] {
+          width: 10%;
+        }
+      }
+    }
+  }
+
+  tbody td:nth-child(3),
+  tbody td:nth-child(4) {
+    text-align: center;
+  }
+
+  tbody td:nth-child(4)::after {
+    content: " min";
+  }
 }

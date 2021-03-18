@@ -8,12 +8,13 @@ db.loadDatabase(function (error) {
     throw error;
   }
   console.log('INFO: local database loaded successfully.');
+  reloadList();
 });
 
 function createData() {
   const title = document.getElementById('add-form_title').value;
   const deadline = new Date(document.getElementById('add-form_deadline').value);
-  const priority = document.getElementById('add-form_priority').value;
+  const priority = 4 - document.getElementById('add-form_priority').value;
   const timescale = document.getElementById('add-form_timescale').value;
   const doc = {
     title: title,
@@ -29,6 +30,7 @@ function createData() {
     }
     console.log('INFO: successfully saved document: ' + JSON.stringify(newDoc));
   });
+  reloadList();
 }
 
 function readData(id) {
@@ -71,32 +73,25 @@ function reloadList() {
       const tasklist_header = document.createElement('thead');
       const tasklist_header_tr = document.createElement('tr');
 
-      // const tasklist_header_id = document.createElement('th');
-      // const id_content_div = document.createElement('div');
-      // id_content_div.append('#');
-      // tasklist_header_id.appendChild(id_content_div);
-      // tasklist_header_id.setAttribute('data-id', 'id');
-      // tasklist_header_id.setAttribute('data-header', '');
-
       const tasklist_header_title = document.createElement('th');
-      const title_content = document.createTextNode('タイトル');
+      const title_content = document.createTextNode('Title');
       tasklist_header_title.appendChild(title_content);
       tasklist_header_title.setAttribute('data-id', 'title');
 
       const tasklist_header_deadline = document.createElement('th');
-      const deadline_content = document.createTextNode('期限');
+      const deadline_content = document.createTextNode('Deadline');
       tasklist_header_deadline.appendChild(deadline_content);
       tasklist_header_deadline.setAttribute('data-id', 'deadline');
       tasklist_header_deadline.setAttribute('sortable', '');
 
       const tasklist_header_priority = document.createElement('th');
-      const priority_content = document.createTextNode('優先度');
+      const priority_content = document.createTextNode('Priority');
       tasklist_header_priority.appendChild(priority_content);
       tasklist_header_priority.setAttribute('data-id', 'priority');
       tasklist_header_priority.setAttribute('sortable', '');
 
       const tasklist_header_timescale = document.createElement('th');
-      const timescale_content = document.createTextNode('所要時間');
+      const timescale_content = document.createTextNode('Timescale');
       tasklist_header_timescale.appendChild(timescale_content);
       tasklist_header_timescale.setAttribute('data-id', 'timescale');
       tasklist_header_timescale.setAttribute('sortable', '');
@@ -115,6 +110,12 @@ function reloadList() {
     var id = 0;
     for (const task of docs) {
       task.id = id;
+      task.deadline = 
+        `${task.deadline.getFullYear()}/` +
+        `${(task.deadline.getMonth()+1 < 10) ? "0" + (task.deadline.getMonth() + 1) : (task.deadline.getMonth() + 1)}/` +
+        `${(task.deadline.getDate() < 10) ? "0" + task.deadline.getDate() : task.deadline.getDate()} ` +
+        `${(task.deadline.getHours() < 10) ? "0" + task.deadline.getHours() : task.deadline.getHours()}:` +
+        `${(task.deadline.getMinutes() < 10) ? "0" + task.deadline.getMinutes() : task.deadline.getMinutes()}`;
       tasks.push(task);
       id = id + 1;
     }
