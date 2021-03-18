@@ -64,6 +64,9 @@ section {
   border-radius: 0.5rem;
   filter: drop-shadow(0px 3px 4px rgba(1, 22, 39, 0.2)); }
 
+#wrapper_add-form {
+  align-self: start; }
+
 .button {
   padding: 0.5rem 1rem;
   background-color: #00abe7;
