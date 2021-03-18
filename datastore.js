@@ -34,8 +34,57 @@ function createData() {
 }
 
 function readData(id) {
-  db.findOne({ _id: id }, (error, docs) => {
+  db.findOne({ _id: id }, (error, doc) => {
+    const modal = document.getElementById('modal_read-data');
 
+    modal.addEventListener('cancel', (event) => {
+      'use strict';
+      event.preventDefault();
+    });
+
+    const updateFormTitle = document.getElementById('update-form_title');
+    updateFormTitle.setAttribute('value', doc.title);
+    const updateFormDeadline = document.getElementById('update-form_deadline');
+    var formattedDeadline = new Date(doc.deadline);
+    formattedDeadline.setHours(formattedDeadline.getHours() + 9);
+    updateFormDeadline.setAttribute('value', formattedDeadline.toISOString().substr(0, 16));
+    const updateFormPriority = document.getElementById('update-form_priority');
+    updateFormPriority.setAttribute('value', 4 - doc.priority);
+    const updateFormTimescale = document.getElementById('update-form_timescale');
+    updateFormTimescale.setAttribute('value', doc.timescale);
+
+    modal.showModal();
+
+    function onClose(event) {
+      modal.removeEventListener('close', onClose);
+      if (modal.returnValue === 'update') {
+        const title = updateFormTitle.value;
+        const deadline = new Date(updateFormDeadline.value);
+        const priority = 4 - updateFormPriority.value;
+        const timescale = updateFormTimescale.value;
+        const newDoc = {};
+        if (doc.title != title) {
+          newDoc.title = title;
+        }
+        if (doc.deadline != deadline) {
+          newDoc.deadline = deadline;
+        }
+        if (doc.priority != priority) {
+          newDoc.priority = priority;
+        }
+        if (doc.timescale != timescale) {
+          newDoc.timescale = timescale;
+        }
+        updateData(id, newDoc);
+        reloadList();
+      }
+
+      updateFormTitle.removeAttribute('value');
+      updateFormDeadline.removeAttribute('value');
+      updateFormPriority.removeAttribute('value');
+      updateFormTimescale.removeAttribute('value');
+    }
+    modal.addEventListener('close', onClose, { once: true });
   });
 }
 
@@ -96,10 +145,16 @@ function reloadList() {
       tasklist_header_timescale.setAttribute('data-id', 'timescale');
       tasklist_header_timescale.setAttribute('sortable', '');
 
+      const tasklist_header_id = document.createElement('th');
+      const header_content = document.createElement('img');
+      header_content.setAttribute('src', 'assets/img/icon/priority.svg');
+      tasklist_header_id.appendChild(header_content);
+      tasklist_header_id.setAttribute('data-id', '_id');
+
       tasklist_header_tr.append(
-        // tasklist_header_id,
         tasklist_header_title, tasklist_header_deadline,
-        tasklist_header_priority, tasklist_header_timescale
+        tasklist_header_priority, tasklist_header_timescale,
+        tasklist_header_id
       );
       tasklist_header.appendChild(tasklist_header_tr);
 
@@ -110,9 +165,9 @@ function reloadList() {
     var id = 0;
     for (const task of docs) {
       task.id = id;
-      task.deadline = 
+      task.deadline =
         `${task.deadline.getFullYear()}/` +
-        `${(task.deadline.getMonth()+1 < 10) ? "0" + (task.deadline.getMonth() + 1) : (task.deadline.getMonth() + 1)}/` +
+        `${(task.deadline.getMonth() + 1 < 10) ? "0" + (task.deadline.getMonth() + 1) : (task.deadline.getMonth() + 1)}/` +
         `${(task.deadline.getDate() < 10) ? "0" + task.deadline.getDate() : task.deadline.getDate()} ` +
         `${(task.deadline.getHours() < 10) ? "0" + task.deadline.getHours() : task.deadline.getHours()}:` +
         `${(task.deadline.getMinutes() < 10) ? "0" + task.deadline.getMinutes() : task.deadline.getMinutes()}`;
@@ -122,6 +177,29 @@ function reloadList() {
 
     const sortableTable = new SortableTable();
     sortableTable.setTable(document.querySelector('#tasklist'));
+    sortableTable.setCellRenderer((col, row) => {
+      const colValue = row[col.id];
+      // cell-is-a-header
+      if (col.isHeader) {
+        if (typeof colValue !== 'undefined') {
+          return `<th>${colValue}</th>`;
+        }
+        return '<th></th>';
+      }
+      // cell-is-not-a-header
+      if (typeof colValue !== 'undefined') {
+        if (col.id === '_id') {
+          return `
+            <td>
+              <button class="button_read-task" onclick="readData('${colValue}')">
+                <img src="assets/img/icon/edit.svg">
+              </button>
+            </td>`;
+        }
+        return `<td>${colValue}</td>`;
+      }
+      return '<td></td>';
+    });
     sortableTable.setData(tasks);
     sortableTable.events()
       .on('sort', (event) => {

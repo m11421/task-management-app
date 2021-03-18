@@ -10,9 +10,23 @@
 </head>
 
 <body>
+    <dialog id="modal_read-data">
+        <form method="dialog" id="update-form" action="#">
+            <input type="text" id="update-form_title" placeholder="title of task">
+            <input type="datetime-local" id="update-form_deadline">
+            <img src="assets/img/icon/priority.svg">
+            <input type="range" id="update-form_priority" max="3" min="1">
+            <img src="assets/img/icon/timescale.svg">
+            <input type="number" id="update-form_timescale" step="15" placeholder="timescale"> <span>min.</span>
+            <div>
+                <button type="submit" class="button" value="cancel">cancel</button>
+                <button type="submit" class="button" value="update">update</button>        
+            </div>
+        </form>
+    </dialog>
     <h1>CRUD test</h1>
     <section id="wrapper_add-form">
-        <h2>Add new task</h2>
+        <h2>Create new task</h2>
         <form id="add-form" action="#">
             <input type="text" id="add-form_title" placeholder="title of task">
             <input type="datetime-local" id="add-form_deadline">
@@ -21,7 +35,7 @@
             <img src="assets/img/icon/timescale.svg">
             <input type="number" id="add-form_timescale" step="15" placeholder="timescale"> <span>min.</span>
         </form>
-        <button class="button" onclick="createData()">Add task to list!</button>
+        <button class="button" onclick="createData()">create</button>
     </section>
     <section>
         <h2>List of tasks<button onclick="reloadList()"></button></h2>

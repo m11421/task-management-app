@@ -11,19 +11,13 @@
   margin: 0;
   color: #011627; }
 
-button {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0; }
-
 body {
-  background-color: rgba(130, 112, 129, 0.1);
+  background-color: #f2f0f2;
   display: grid;
   margin: var(--gap);
   -moz-column-gap: var(--gap);
        column-gap: var(--gap);
-  grid-template-columns: 30% 1fr; }
+  grid-template-columns: 25% 1fr; }
 
 h1 {
   grid-column: 1 / -1;
@@ -46,17 +40,20 @@ h2 {
     vertical-align: bottom;
     right: 0; }
 
-@-webkit-keyframes rotate360 {
-  from {
-    transform: rotate(0); }
-  to {
-    transform: rotate(360); } }
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0; }
 
-@keyframes rotate360 {
-  from {
-    transform: rotate(0); }
-  to {
-    transform: rotate(360); } }
+dialog {
+  margin: auto;
+  padding: 1rem;
+  padding-bottom: .5rem;
+  background-color: #fdfffc;
+  border: none;
+  border-radius: 0.5rem;
+  filter: drop-shadow(0px 3px 4px rgba(1, 22, 39, 0.2)); }
 
 section {
   padding: 1rem;
@@ -79,41 +76,55 @@ section {
   border-top: 3px solid #00abe7;
   background-color: #0081af; }
 
-#add-form {
+#add-form,
+#update-form {
   margin: 1rem 0;
   display: grid;
   grid-template-rows: repeat(4, -webkit-max-content);
   grid-template-rows: repeat(4, max-content);
-  grid-template-columns: 18px calc(100% - 53px) 2rem;
+  grid-template-columns: 18px calc(100% - 55px) 2rem;
   row-gap: 1rem;
   -moz-column-gap: 0.3rem;
        column-gap: 0.3rem;
   align-items: center; }
-  #add-form img {
+  #add-form img,
+  #update-form img {
     grid-column: 1; }
-  #add-form input {
+  #add-form_title, #add-form_deadline,
+  #update-form_title,
+  #update-form_deadline {
+    grid-column: 1 / -1; }
+  #add-form_priority,
+  #update-form_priority {
+    padding: 0;
+    grid-column: 2 / -1; }
+  #add-form_timescale,
+  #update-form_timescale {
+    grid-column: 2; }
+  #add-form input,
+  #update-form input {
     box-sizing: border-box;
     border: none;
     border-radius: 1.3rem;
     padding: 0.3rem 1rem;
     filter: drop-shadow(0 0 4px rgba(130, 112, 129, 0.2));
     transition: 0.3s; }
-    #add-form input:focus {
+    #add-form input:focus,
+    #update-form input:focus {
       filter: drop-shadow(0 0 4px rgba(130, 112, 129, 0.4)); }
-    #add-form input#add-form_title, #add-form input#add-form_deadline {
-      grid-column: 1 / -1; }
-    #add-form input#add-form_priority {
-      padding: 0;
-      grid-column: 2 / -1; }
-    #add-form input#add-form_timescale {
-      grid-column: 2; }
+
+#update-form div {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin: auto; }
+  #update-form div button:first-child {
+    margin-right: .5rem; }
 
 #tasklist {
   width: 100%;
   border-collapse: collapse; }
-
-.sortable-table td {
-  padding: 0.3rem 0; }
 
 .sortable-table tr:nth-child(2n) {
   background-color: rgba(130, 112, 129, 0.1); }
@@ -122,15 +133,28 @@ section {
   background-color: #00abe7; }
   .sortable-table thead th {
     padding: 0.5rem 0;
+    vertical-align: middle !important;
     color: #fdfffc; }
     .sortable-table thead th.sortable[data-id="deadline"] {
-      width: 23%; }
-    .sortable-table thead th.sortable[data-id="priority"], .sortable-table thead th.sortable[data-id="timescale"] {
-      width: 10%; }
+      box-sizing: border-box;
+      width: 109px; }
+    .sortable-table thead th.sortable[data-id="priority"] {
+      width: 70px; }
+    .sortable-table thead th.sortable[data-id="timescale"] {
+      width: 85px; }
+    .sortable-table thead th[data-id="_id"] {
+      width: 24px; }
 
-.sortable-table tbody td:nth-child(3),
-.sortable-table tbody td:nth-child(4) {
-  text-align: center; }
-
-.sortable-table tbody td:nth-child(4)::after {
-  content: " min"; }
+.sortable-table tbody td {
+  padding: 0.3rem 0;
+  line-height: 1.3; }
+  .sortable-table tbody td:first-child {
+    padding-right: 0.5rem;
+    padding-left: 0.5rem; }
+  .sortable-table tbody td:nth-child(3), .sortable-table tbody td:nth-child(4) {
+    padding-right: 17px;
+    text-align: center; }
+  .sortable-table tbody td:nth-child(4)::after {
+    content: " min"; }
+  .sortable-table tbody td:nth-child(5) {
+    text-align: center; }
