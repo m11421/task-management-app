@@ -1,7 +1,7 @@
 {
   "name": "electron-nedb_crud",
-  "version": "0.1.0",
-  "author": "m11421",
+  "version": "1.0.0",
+  "author": "mhousetree",
   "description": "App for practice of nedb and electron.",
   "main": "main.js",
   "scripts": {

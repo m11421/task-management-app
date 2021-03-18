@@ -30,6 +30,11 @@ function createData() {
       throw error;
     }
     console.log('INFO: successfully saved document: ' + JSON.stringify(newDoc));
+
+    title.value = "";
+    deadline.value = "";
+    priority.value = "";
+    timescale.value = "";
   });
   reloadList();
 }
@@ -81,6 +86,9 @@ function readData(id) {
           newDoc.timescale = timescale;
         }
         updateData(id, newDoc);
+        reloadList();
+      } else if (modal.returnValue === 'delete') {
+        deleteData(id);
         reloadList();
       }
     }
@@ -146,9 +154,6 @@ function reloadList() {
       tasklist_header_timescale.setAttribute('sortable', '');
 
       const tasklist_header_id = document.createElement('th');
-      const header_content = document.createElement('img');
-      header_content.setAttribute('src', 'assets/img/icon/priority.svg');
-      tasklist_header_id.appendChild(header_content);
       tasklist_header_id.setAttribute('data-id', '_id');
 
       tasklist_header_tr.append(
@@ -192,7 +197,9 @@ function reloadList() {
           return `
             <td>
               <button class="button_read-task" onclick="readData('${colValue}')">
-                <img src="assets/img/icon/edit.svg">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" width="18px" height="18px">
+                  <path d="M0 0h24v24H0z" fill="none"/><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
+                </svg>
               </button>
             </td>`;
         }
@@ -208,12 +215,6 @@ function reloadList() {
       event.sortDir=${event.sortDir}
       event.data=\n${JSON.stringify(event.data)}`);
       });
-  });
-}
-
-function GetDatas() {
-  db.find({}, (error, docs) => {
-    console.log(docs);
   });
 }
 

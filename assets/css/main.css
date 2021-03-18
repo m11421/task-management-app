@@ -63,18 +63,33 @@ section {
 
 #wrapper_add-form {
   align-self: start; }
+  #wrapper_add-form .button {
+    margin: auto;
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
+    grid-column: 1 / -1; }
 
 .button {
   padding: 0.5rem 1rem;
-  background-color: #00abe7;
   color: #fdfffc;
+  background-color: #00abe7;
   border-bottom: 3px solid #0081af;
   border-radius: 0.5rem; }
-
-.button:active {
-  border-bottom: none;
-  border-top: 3px solid #00abe7;
-  background-color: #0081af; }
+  .button:active {
+    border-bottom: none;
+    border-top: 3px solid #00abe7;
+    background-color: #0081af; }
+  .button--red {
+    padding: 0.5rem 1rem;
+    color: #fdfffc;
+    background-color: #fc834c;
+    border-bottom: 3px solid #c25928;
+    border-radius: 0.5rem; }
+    .button--red:active {
+      border-bottom: none;
+      border-top: 3px solid #fc834c;
+      background-color: #c25928; }
 
 #add-form,
 #update-form {
@@ -87,9 +102,10 @@ section {
   -moz-column-gap: 0.3rem;
        column-gap: 0.3rem;
   align-items: center; }
-  #add-form img,
-  #update-form img {
-    grid-column: 1; }
+  #add-form svg,
+  #update-form svg {
+    grid-column: 1;
+    fill: #0081af; }
   #add-form_title, #add-form_deadline,
   #update-form_title,
   #update-form_deadline {
@@ -117,14 +133,13 @@ section {
   grid-column: 1 / -1;
   display: flex;
   flex-direction: row;
-  justify-content: center;
-  margin: auto; }
-  #update-form div button:first-child {
-    margin-right: .5rem; }
+  justify-content: space-evenly; }
 
 #tasklist {
   width: 100%;
   border-collapse: collapse; }
+  #tasklist svg {
+    fill: #0081af; }
 
 .sortable-table tr:nth-child(2n) {
   background-color: rgba(130, 112, 129, 0.1); }

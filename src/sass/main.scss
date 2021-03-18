@@ -2,6 +2,8 @@ $text-color: #011627;
 $bg-color: #fdfffc;
 $main-color: #0081af;
 $main-light-color: #00abe7;
+$alt-color: #c25928;
+$alt-light-color: #fc834c;
 $sub-color: #827081;
 // https://coolors.co/011627-fdfffc-827081-0081af-00abe7
 
@@ -80,20 +82,34 @@ section {
 
 #wrapper_add-form {
   align-self: start;
+
+  .button {
+    margin: auto;
+    width: fit-content;
+    grid-column: 1 / -1;
+  }
 }
 
-.button {
+@mixin button($bg, $shadow) {
   padding: 0.5rem 1rem;
-  background-color: $main-light-color;
   color: $bg-color;
-  border-bottom: 3px solid $main-color;
+  background-color: $bg;
+  border-bottom: 3px solid $shadow;
   border-radius: 0.5rem;
+
+  &:active {
+    border-bottom: none;
+    border-top: 3px solid $bg;
+    background-color: $shadow;  
+  }
 }
 
-.button:active {
-  border-bottom: none;
-  border-top: 3px solid $main-light-color;
-  background-color: $main-color;
+.button{
+  @include button($main-light-color, $main-color);
+
+  &--red {
+    @include button($alt-light-color, $alt-color);
+  }
 }
 
 #add-form,
@@ -106,8 +122,9 @@ section {
   column-gap: 0.3rem;
   align-items: center;
 
-  img {
+  svg {
     grid-column: 1;
+    fill: $main-color;
   }
 
   &_title,
@@ -142,17 +159,16 @@ section {
   grid-column: 1 / -1;
   display: flex;
   flex-direction: row;
-  justify-content: center;
-  margin: auto;
-
-  button:first-child {
-    margin-right: .5rem;
-  }
+  justify-content: space-evenly;
 }
 
 #tasklist {
   width: 100%;
   border-collapse: collapse;
+
+  svg {
+    fill: $main-color;
+  }
 }
 
 .sortable-table {

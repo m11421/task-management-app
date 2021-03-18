@@ -20,25 +20,34 @@
             <input type="number" id="update-form_timescale" step="15" placeholder="timescale"> <span>min.</span>
             <div>
                 <button type="submit" class="button" value="cancel">cancel</button>
-                <button type="submit" class="button" value="update">update</button>        
+                <button type="submit" class="button" value="update">update</button>
+                <button type="submit" class="button--red" value="delete">delete</button>
             </div>
         </form>
     </dialog>
-    <h1>CRUD test</h1>
+    <h1>Task Management App</h1>
     <section id="wrapper_add-form">
         <h2>Create new task</h2>
         <form id="add-form" action="#">
             <input type="text" id="add-form_title" placeholder="title of task">
             <input type="datetime-local" id="add-form_deadline">
-            <img src="assets/img/icon/priority.svg">
+            <!-- icon of priority -->
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" width="18px" height="18px">
+                <path d="M0 0h24v24H0z" fill="none" />
+                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+            </svg>
             <input type="range" id="add-form_priority" max="3" min="1">
-            <img src="assets/img/icon/timescale.svg">
+            <!-- icon of timescale -->
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" width="18px" height="18px">
+                <path d="M0 0h24v24H0V0z" fill="none" />
+                <path d="M6 2v6h.01L6 8.01 10 12l-4 4 .01.01H6V22h12v-5.99h-.01L18 16l-4-4 4-3.99-.01-.01H18V2H6z" />
+            </svg>
             <input type="number" id="add-form_timescale" step="15" placeholder="timescale"> <span>min.</span>
+            <button type="submit" class="button" onclick="createData()">create</button>
         </form>
-        <button class="button" onclick="createData()">create</button>
     </section>
     <section>
-        <h2>List of tasks<button onclick="reloadList()"></button></h2>
+        <h2>List of tasks</h2>
         <div class="sortable-table"></div>
     </section>
 </body>
