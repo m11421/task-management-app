@@ -1,5 +1,6 @@
 var SortableTable = require('@riversun/sortable-table');
 var Datastore = require('nedb');
+var Moment = require('moment');
 let db = new Datastore({ filename: 'data.db' });
 
 db.loadDatabase(function (error) {
@@ -33,6 +34,12 @@ function createData() {
   reloadList();
 }
 
+function toDatetime(date) {
+  return Moment(date)
+    .toISOString(true)
+    .substr(0, 16);
+}
+
 function readData(id) {
   db.findOne({ _id: id }, (error, doc) => {
     const modal = document.getElementById('modal_read-data');
@@ -43,15 +50,13 @@ function readData(id) {
     });
 
     const updateFormTitle = document.getElementById('update-form_title');
-    updateFormTitle.setAttribute('value', doc.title);
+    updateFormTitle.value = doc.title;
     const updateFormDeadline = document.getElementById('update-form_deadline');
-    var formattedDeadline = new Date(doc.deadline);
-    formattedDeadline.setHours(formattedDeadline.getHours() + 9);
-    updateFormDeadline.setAttribute('value', formattedDeadline.toISOString().substr(0, 16));
+    updateFormDeadline.value = toDatetime(doc.deadline);
     const updateFormPriority = document.getElementById('update-form_priority');
-    updateFormPriority.setAttribute('value', 4 - doc.priority);
+    updateFormPriority.value = 4 - doc.priority;
     const updateFormTimescale = document.getElementById('update-form_timescale');
-    updateFormTimescale.setAttribute('value', doc.timescale);
+    updateFormTimescale.value = doc.timescale;
 
     modal.showModal();
 
@@ -78,11 +83,6 @@ function readData(id) {
         updateData(id, newDoc);
         reloadList();
       }
-
-      updateFormTitle.removeAttribute('value');
-      updateFormDeadline.removeAttribute('value');
-      updateFormPriority.removeAttribute('value');
-      updateFormTimescale.removeAttribute('value');
     }
     modal.addEventListener('close', onClose, { once: true });
   });
