@@ -4,12 +4,12 @@
 タスクリストは 期限/重要度/所要時間 それぞれについてソートできます。
 
 ## 使用技術
-* Node.js
 * Electron
 * NeDB
+* JavaScript
+* Node.js
 * HTML
 * CSS(SCSS)
-* JavaScript
 
 ## 機能一覧
 * タスク追加
